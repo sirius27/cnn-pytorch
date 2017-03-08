@@ -1,2 +1,2 @@
 # cnn-pytorch
-参照pytorch tutorial中的Deep Learning with Pytorch ipynb，搭建卷及神经网络用于cifar-10的图片分类。
+Transfered codes from [Deep Learning with Pytorch ipython notebook](https://github.com/pytorch/tutorials/blob/master/Deep%20Learning%20with%20PyTorch.ipynb) of [pytorch tutorial](https://github.com/pytorch),building cnn and test on cifar-10
