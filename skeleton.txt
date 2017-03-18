@@ -1,0 +1,113 @@
+import torch
+import torchvision
+import torchvision.transforms as transforms
+import torch.nn as nn
+import torch.optim as optim
+import matplotlib.pyplot as plt
+import numpy as np
+import torch.nn.functional as F
+import inspect
+from torch.autograd import Variable
+
+
+# The output of torchvision datasets are PILImage images of range [0, 1].
+# A transformer transforming images to Tensors of normalized range [-1, 1]
+transform=
+trainset =
+trainloader =
+
+testset =
+testloader =
+classes = ('plane', 'car', 'bird', 'cat',
+           'deer', 'dog', 'frog', 'horse', 'ship', 'truck')
+
+# functions to show an image
+
+def imshow(img):
+
+
+# show some random training images
+dataiter =
+images, labels =
+
+# print images
+imshow()
+# print labels
+
+class Net(nn.Module):
+    def __init__(self):
+        self.conv1 =
+        self.pool  =
+        self.conv2 =
+        self.fc1   =
+        self.fc2   =
+        self.fc3   =
+
+    def forward(self, x):
+
+        return x
+
+net = Net()
+
+criterion = nn.CrossEntropyLoss()
+
+optimizer =
+
+for epoch in range():  # loop over the dataset multiple times
+
+    running_loss =
+    for
+        # get the inputs
+        inputs, labels =
+
+        inputs, labels =
+
+        # zero the parameter gradients.In fact it is zeroing the grads of parameters wrapped in optimizer
+        optimizer
+
+        # forward + backward + optimize
+        outputs =
+        # loss is a Variable
+        loss =
+        loss.
+        optimizer.
+
+        # print statistics
+        running_loss +=
+        if i % 2000 == 1999:  # print every 2000 mini-batches
+            print('[%d, %5d] loss: %.3f' % (epoch + 1, i + 1, running_loss / 2000))
+            running_loss = 0.0
+print('Finished Training')
+
+dataiter =
+images, labels =
+
+# print images
+imshow(torchvision.utils.make_grid(images))
+print('GroundTruth: ', ' '.join('%5s'%classes[labels[j]] for j in range(4)))
+
+outputs = net(Variable(images))
+
+# the outputs are energies for the 10 classes.
+# Higher the energy for a class, the more the network
+# thinks that the image is of the particular class
+
+# So, let's get the index of the highest energy
+_, predicted = torch.max(outputs.data, 1)
+
+print('Predicted: ', ' '.join('%5s'% classes[predicted[j][0]] for j in range(4)))
+
+class_correct = list(0. for i in range(10))
+class_total = list(0. for i in range(10))
+for data in testloader:
+    images, labels = data
+    outputs = net(Variable(images))
+    _, predicted = torch.max(outputs.data, 1)
+    c = (predicted == labels).squeeze()
+    for i in range(4):
+        label = labels[i]
+        class_correct[label] += c[i]
+        class_total[label] += 1
+
+for i in range(10):
+    print('Accuracy of %5s : %2d %%' % (classes[i], 100 * class_correct[i] / class_total[i]))
